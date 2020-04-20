@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>
+<button onclick="randomized()">Random</button>
+<button onclick="classic()">Classic</button>
+<button onclick="renderLetters(oldBoard)">Old Board</button>
+<button onclick="renderLetters(newBoard)">New Board</button>
+<button onclick="scoreTurn()">Show Score</button>
+<button onclick="displayTurn()">Show new words</button>
+
+</p>
+<div style="position: relative;">
+ <canvas id="boardCanvas" width="866" height="616" 
+   style="border:1px solid #c3c3c3; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+ <canvas id="letterCanvas" width="616" height="616" 
+   style="border:0px; position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+</div>
+
+<script src="BoardGenerator.js"></script>
+<script src="BoardScoring.js"></script>
+</body>
+</html>
+
