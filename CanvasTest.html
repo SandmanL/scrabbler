@@ -26,7 +26,7 @@
     font-size: 10px;
     line-height: 16px;
 }
-#rack {
+.rack {
 	position: absolute;
 	left: 900px;
 	top: 40px;
@@ -45,17 +45,18 @@
 <button onclick="draw(7)">draw tiles</button>
 <button onclick="shuffle()">shuffle rack</button>
 <button onclick="swap()">swap your tiles</button>
+<button onclick="reclaimTiles()">reclaim tiles</button>
 
 </p>
 <div style="position: relative;">
- <canvas id="boardCanvas" width="866" height="616"
+ <canvas id="boardCanvas" width="66" height="66"
    style="border:1px solid #c3c3c3; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
- <canvas id="letterCanvas" width="616" height="616"
+ <canvas id="letterCanvas" width="66" height="66"
    style="border:0px; position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
-</div>
+ <span id="bag"></span>
+ <span id="rack" class ="rack"></span>
 
-<p id="bag"></p>
-<p id="rack"></p>
+</div>
 
 <script src="BoardGenerator.js"></script>
 <script src="BoardScoring.js"></script>
