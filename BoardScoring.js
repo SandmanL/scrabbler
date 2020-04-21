@@ -35,7 +35,7 @@ let oldBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ','C','A','R','R','Y',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ','L',' ','E',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']];
-				
+
 let newBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
@@ -57,8 +57,18 @@ let letterValues = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
 let wordsFound = [];
 var letterCanvas = document.getElementById("letterCanvas");
 var letterBoard = letterCanvas.getContext("2d");
-letterBoard.font="30px Georgia";
+letterBoard.font="30px Helvetica";
 letterBoard.fillStyle = "#000000";
+letterCanvas.onclick = function (event) {
+	const x = event.pageX;
+	const y = event.pageY;
+	console.log(x, y);
+	if (selectedTile){
+		selectedTile.style.left = `${x}px`;
+		selectedTile.style.top = `${y}px`;
+		document.body.append(selectedTile);
+	}
+}
 
 function renderLetters(array){
 	//clear letters
@@ -102,26 +112,26 @@ to find score
 		}
 	}
 	console.log(turnCoordinates.length);
-	
+
 	//only one new tile placed
 	if (turnCoordinates.length==1){
 		let xCoor = turnCoordinates[0][0];
 		let yCoor = turnCoordinates[0][1];
-		
+
 		//find longest horizontal word
 		let left = findLeft(xCoor,yCoor);
 		let right = findRight(xCoor,yCoor);
 
 		scoringWords.push(getHorizWord(left,right,yCoor));
 		wordMultis.push(getHorizMulti(left,right,yCoor));
-			
+
 		//find longest vertical word
 		let top = findTop(xCoor,yCoor);
 		let bot = findBot(xCoor,yCoor);
-		
+
 		scoringWords.push(getVertWord(xCoor,top,bot));
 		wordMultis.push(getVertMulti(xCoor,top,bot));
-	
+
 	//more than one new tile placed
 	}else if(turnCoordinates.length>1){
 		//check if new word is vertical
@@ -131,10 +141,10 @@ to find score
 			let yCoor = turnCoordinates[0][1];
 			let top = findTop(xCoor,yCoor);
 			let bot = findBot(xCoor,yCoor);
-			
+
 			scoringWords.push(getVertWord(xCoor,top,bot));
 			wordMultis.push(getVertMulti(xCoor,top,bot));
-			
+
 			//for each new tile, look for new words horizontally
 			for (let i = 0; i<turnCoordinates.length;i++){
 				xCoor = turnCoordinates[i][0];
@@ -144,9 +154,9 @@ to find score
 
 				scoringWords.push(getHorizWord(left,right,yCoor));
 				wordMultis.push(getHorizMulti(left,right,yCoor));
-				
+
 			}
-			
+
 		} else {
 			//find longest horizontal word
 			let xCoor = turnCoordinates[0][0];
@@ -156,7 +166,7 @@ to find score
 
 			scoringWords.push(getHorizWord(left,right,yCoor));
 			wordMultis.push(getHorizMulti(left,right,yCoor));
-			
+
 			//for each new tile, look for new words vertically
 			for (let i = 0; i<turnCoordinates.length;i++){
 				xCoor = turnCoordinates[i][0];
@@ -166,11 +176,11 @@ to find score
 
 				scoringWords.push(getVertWord(xCoor,top,bot));
 				wordMultis.push(getVertMulti(xCoor,top,bot));
-				
+
 			}
-		}	
+		}
 	}
-	
+
 	//finds top end of a sequence of continuous letters
 	function findTop(x,y){
 		while(y>=0&&newBoard[y][x]!=' ') y--;
@@ -195,7 +205,7 @@ to find score
 	function getVertWord(x,y1,y2){
 		//cancel function if word isnt at least 2 tiles long or incorrect order is given
 		if(y2<=y1) return "";
-		
+
 		let word = "";
 		let found = "";
 		for (let j = y1; j <= y2; j++){
@@ -218,7 +228,7 @@ to find score
 	function getVertMulti(x,y1,y2){
 		//cancel function if word isnt at least 2 tiles long or incorrect order is given
 		if(y2<=y1) return 0;
-		
+
 		let multi = 1;
 		for (let j = y1; j <= y2; j++){
 			//record multiplier found only if tile is new
@@ -232,7 +242,7 @@ to find score
 	function getHorizWord(x1,x2,y){
 		//cancel function if word isnt at least 2 tiles long or incorrect order is given
 		if(x2<=x1) return "";
-		
+
 		let word = "";
 		let found = "";
 		for (let i = x1; i <= x2; i++){
@@ -255,7 +265,7 @@ to find score
 	function getHorizMulti(x1,x2,y){
 		//cancel function if word isnt at least 2 tiles long or incorrect order is given
 		if(x2<=x1) return 0;
-		
+
 		let multi = 1;
 		for (let i = x1; i <= x2; i++){
 			//record multiplier found only if tile is new
@@ -267,16 +277,26 @@ to find score
 	}
 	console.log(scoringWords);
 	console.log(wordMultis);
+
+
+	//scoring new words
 	let wordScore;
 	for (let i =0; i < scoringWords.length;i++){
 		wordScore = 0;
 		for (let j = 0; j < scoringWords[i].length;j++){
-			wordScore = wordScore + letterValues[scoringWords[i].charCodeAt(j)-65]; 
+			wordScore = wordScore + letterScore(scoringWords[i][j]);
 		}
 		turnScore = turnScore + wordScore*wordMultis[i];
 	}
 	console.log("Score for this turn is " + turnScore);
 }
+
+//gets value of a letter
+function letterScore(letter) {
+	return letterValues[letter.charCodeAt(0)-65];
+}
+
+//Shows words played during current turn
 function displayTurn(){
 	console.log(wordsFound);
 }

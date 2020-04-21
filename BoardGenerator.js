@@ -28,9 +28,9 @@ function legend() {
 	const gap = 30;
 	let txt = "Error";
 	board.font="20px Georgia";
-	
+
 	function description(tier){
-	
+
 		board.beginPath();
 		board.moveTo(boardW + gap, gap*tier + (tier-1)*(tileH+2));
 		board.lineTo(boardW + gap,  gap*tier + (tier)*(tileH+2));
@@ -50,19 +50,19 @@ function legend() {
 		board.fillText(txt, boardW + gap*1.5 + tileW, gap*(tier+1) + (tier-1)*(tileH+2));
 
 	}
-	
+
 	for (let i=0;i<4;i++) description(i+1);
 
 }
 
 function grid() {
-	board.beginPath();	
-	
+	board.beginPath();
+
 	for (let i=0;i<16;i++){
 		//Vertical grid lines
 		board.moveTo(i*HorizSpacing, 0);
 		board.lineTo(i*HorizSpacing, boardH);
-		
+
 		//Horizontal grid lines
 		board.moveTo(0, i*VertSpacing);
 		board.lineTo(boardW, i*VertSpacing);
@@ -98,7 +98,7 @@ function randomized() {
 function mirr(){
 	board.clearRect(HorizSpacing*8,0,boardW-(HorizSpacing*8), boardH);
 	board.clearRect(0,VertSpacing*8,boardW,boardH-(VertSpacing*8));
-	
+
 	//mirror on Q1
 	for (let i=8; i<15;i++){
 		for (let j=0; j<8;j++){
@@ -109,7 +109,7 @@ function mirr(){
 			}
 		}
 	}
-	
+
 	//mirror on Q3
 	for (let i=0; i<8;i++){
 		for (let j=8; j<15;j++){
@@ -119,8 +119,8 @@ function mirr(){
 				board.fillRect((22-j)*HorizSpacing,i*VertSpacing,tileW,tileH);
 			}
 		}
-	}	
-	
+	}
+
 	//mirror on Q4
 	for (let i=8; i<15;i++){
 		for (let j=8; j<15;j++){
@@ -139,14 +139,14 @@ function classic() {
 	//draws classic board
 	board.clearRect(0,0,boardW,boardH);
 	resetColored();
-	
+
 	//initialize colored array
 	// 1 for DL
 	// 2 for TL
 	// 3 for DW
 	// 4 for TW
-	
-	colored[0][0] = 4; 
+
+	colored[0][0] = 4;
 	colored[5][5] = 2;
 	colored[6][6] = 1;
 	colored[3][0] = 1;
@@ -159,7 +159,7 @@ function classic() {
 	colored[2][6] = 1;
 	colored[7][3] = 1;
 	colored[3][7] = 1;
-	
+
 	for (let i=0; i<8;i++){
 		for (let j=0; j<8;j++) {
 			if(i==j&&!(colored[i][j]))
