@@ -119,12 +119,12 @@ document.onclick = function (event) {
 letterCanvas.onclick = function (event) {
 	const x = event.offsetX;
 	const y = event.offsetY;
+	let xCoor = Math.floor(x/HorizSpacing);
+	let yCoor = Math.floor(y/VertSpacing);
 	
 	//if a tile from rack is selected
-	if (selectedTile){
+	if (selectedTile && newBoard[yCoor][xCoor] == ' '){
 		//add selected tile letter to new board
-		let xCoor = Math.floor(x/HorizSpacing);
-		let yCoor = Math.floor(y/VertSpacing);
 		newBoard[yCoor][xCoor] = selectedTile.getAttribute('letter');
 		
 		//display new board
