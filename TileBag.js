@@ -51,8 +51,6 @@ function draw() {
 			oldBoard[i][j] = newBoard[i][j];
 		}
 	}
-	
-	//ask Chris why oldBoard = newBoard breaks my shit
 }
 
 function swap() {
@@ -95,9 +93,12 @@ function shuffle() {
 	renderRack();
 }
 
+function makeTile(letter, index, pos) {
+	return `<span class="tile" letter="${letter}" index="${index}" ${pos}>${letter}<span class="tileScore">${letterScore(letter)}</span></span>`;
+}
+
 function renderRack() {
-	document.getElementById("rack").innerHTML = rack.map((letter,index) =>
-		`<span class="tile" letter="${letter}" index="${index}">${letter}<span class="tileScore">${letterScore(letter)}</span></span>`).join('');
+	document.getElementById("rack").innerHTML = rack.map(makeTile).join('');
     //letter.style.left = `${x}px`;
 }
 
@@ -119,12 +120,12 @@ document.onclick = function (event) {
 letterCanvas.onclick = function (event) {
 	const x = event.offsetX;
 	const y = event.offsetY;
+	let xCoor = Math.floor(x/HorizSpacing);
+	let yCoor = Math.floor(y/VertSpacing);
 	
-	//if a tile from rack is selected
-	if (selectedTile){
+	//if a tile from rack is selected && board position is empty
+	if (selectedTile&& newBoard[yCoor][xCoor] == ' '){
 		//add selected tile letter to new board
-		let xCoor = Math.floor(x/HorizSpacing);
-		let yCoor = Math.floor(y/VertSpacing);
 		newBoard[yCoor][xCoor] = selectedTile.getAttribute('letter');
 		
 		//display new board
@@ -136,12 +137,6 @@ letterCanvas.onclick = function (event) {
 		
 		//re render rack;
 		renderRack();
-		
-		//Chris Code
-		//selectedTile.style.position = "absolute";
-		//selectedTile.style.left = `${x-x%HorizSpacing+2}px`;
-		//selectedTile.style.top = `${y-y%VertSpacing+2}px`;
-		//document.body.append(selectedTile);
 		
 	}
 }

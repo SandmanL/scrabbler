@@ -22,10 +22,10 @@ to find score
 
 let oldBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ',' ','T',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ','R','E','N','D','E','R',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ',' ','T',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
@@ -38,10 +38,10 @@ let oldBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 
 let newBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
-				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ',' ','T',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ','R','E','N','D','E','R',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ',' ','S',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
+				[' ',' ','T',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
@@ -56,6 +56,7 @@ let letterValues = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
 
 let wordsFound = [];
 let turnCoordinates = [];
+
 var letterCanvas = document.getElementById("letterCanvas");
 letterCanvas.width = boardW;
 letterCanvas.height = boardH;
@@ -66,12 +67,35 @@ letterBoard.fillStyle = "#000000";
 function renderLetters(array){
 	//clear letters
 	letterBoard.clearRect(0,0,boardW,boardH);
+	let tile = null;
+	let x;
+	let y;
+	let pos = "";
 	//draw new letter array
 	for (let i=0; i<15;i++){
 		for (let j=0; j<15;j++) {
-			letterBoard.fillText(array[i][j],j*HorizSpacing+10,(i+1)*VertSpacing-10);
+			if (array[i][j] != ' ') {
+				//attempt with makeTile function directly
+				x = j*HorizSpacing+2;
+				y = i*VertSpacing+2;
+				pos = `style = "top: ${y}px; left: ${x}px; position: absolute;"`;
+				document.getElementById("bag").insertAdjacentHTML('beforebegin',makeTile(array[i][j],-1,pos));
+				
+				//Attempt with style setting
+				//tile.style.left = `${x}px`;
+				//tile.style.top = `${y}px`;
+				//document.getElementById('playArea').append(tile);
+				
+				//Original code
+				//letterBoard.fillText(array[i][j],j*HorizSpacing+10,(i+1)*VertSpacing-10);
+			}
 		}
 	}
+	
+	//Chris Code
+	//selectedTile.style.left = `${x-x%HorizSpacing+2}px`;
+	//selectedTile.style.top = `${y-y%VertSpacing+2}px`;
+	//document.body.append(selectedTile);
 }
 
 // finds coordinates of tiles played this turn and stores them to turnCoordinates
