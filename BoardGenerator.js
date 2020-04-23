@@ -1,6 +1,6 @@
 
-var boardCanvas = document.getElementById("boardCanvas");
-var board = boardCanvas.getContext("2d");
+const boardCanvas = document.getElementById("boardCanvas");
+const board = boardCanvas.getContext("2d");
 const tileW = 40;
 const tileH = tileW;
 const boardH = tileH*15+16;

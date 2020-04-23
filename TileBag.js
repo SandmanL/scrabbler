@@ -124,7 +124,7 @@ letterCanvas.onclick = function (event) {
 	let yCoor = Math.floor(y/VertSpacing);
 	
 	//if a tile from rack is selected && board position is empty
-	if (selectedTile&& newBoard[yCoor][xCoor] == ' '){
+	if (selectedTile && newBoard[yCoor][xCoor] == ' '){
 		//add selected tile letter to new board
 		newBoard[yCoor][xCoor] = selectedTile.getAttribute('letter');
 		
@@ -137,7 +137,7 @@ letterCanvas.onclick = function (event) {
 		
 		//re render rack;
 		renderRack();
-		
+		selectedTile = null;
 	}
 }
 
