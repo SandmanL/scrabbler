@@ -57,14 +57,13 @@ let letterValues = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
 let wordsFound = [];
 let turnCoordinates = [];
 
-const letterCanvas = document.getElementById("letterCanvas");
-letterCanvas.width = boardW;
-letterCanvas.height = boardH;
 const letterBoard = document.getElementById("letterBoard");
-	
+letterBoard.style.width = `${boardW}px`;
+letterBoard.style.height = `${boardH}px`;
+
 function renderLetters(array){
 	//clear letters
-	letterBoard.innerHTML = "";
+	let newHTML = "";
 	//let tile = null;
 	let x;
 	let y;
@@ -77,19 +76,20 @@ function renderLetters(array){
 				x = j*HorizSpacing+2;
 				y = i*VertSpacing+2;
 				pos = `style = "top: ${y}px; left: ${x}px; position: absolute;"`;
-				letterBoard.innerHTML += makeTile(array[i][j],-1,pos);
-				
+				newHTML += makeTile(array[i][j],-1,pos);
+
 				//Attempt with style setting
 				//tile.style.left = `${x}px`;
 				//tile.style.top = `${y}px`;
 				//document.getElementById('playArea').append(tile);
-				
+
 				//Original code
 				//letterBoard.fillText(array[i][j],j*HorizSpacing+10,(i+1)*VertSpacing-10);
 			}
 		}
 	}
-	
+	letterBoard.innerHTML = newHTML;
+
 	//Chris Code
 	//selectedTile.style.left = `${x-x%HorizSpacing+2}px`;
 	//selectedTile.style.top = `${y-y%VertSpacing+2}px`;
@@ -131,7 +131,7 @@ to find score
 
 	// find coordinates of new letters played
 	tilesPlayed();
-	
+
 	//only one new tile placed
 	if (turnCoordinates.length==1){
 		let xCoor = turnCoordinates[0][0];
