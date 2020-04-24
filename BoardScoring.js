@@ -199,6 +199,8 @@ to find score
 			}
 		}
 	}
+	
+	console.log(isValidPlay());
 
 	//finds top end of a sequence of continuous letters
 	function findTop(x,y){
@@ -294,10 +296,7 @@ to find score
 		}
 		return multi;
 	}
-	console.log(scoringWords);
-	console.log(wordMultis);
-
-
+	
 	//scoring new words
 	let wordScore;
 	for (let i =0; i < scoringWords.length;i++){

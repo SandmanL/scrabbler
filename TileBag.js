@@ -32,6 +32,7 @@ function draw() {
 
 	//draw new tiles
 	for (let i = 0; i<n;i++){
+		//if bag is not empty
 		if (bagTiles.length){
 			//find random position in bag
 			let index=Math.floor(Math.random()*bagTiles.length);
@@ -51,6 +52,9 @@ function draw() {
 			oldBoard[i][j] = newBoard[i][j];
 		}
 	}
+	
+	//increase turn counter
+	turnID++;
 }
 
 function swap() {
@@ -150,7 +154,7 @@ function reclaimTiles() {
 	
 	//find coordinates of tiles placed
 	tilesPlayed();
-	console.log(turnCoordinates);
+	
 	for (let i = 0; i<turnCoordinates.length;i++){
 		xCoor = turnCoordinates[i][0];
 		yCoor = turnCoordinates[i][1];
@@ -158,7 +162,6 @@ function reclaimTiles() {
 		rack.push(newBoard[yCoor][xCoor]);
 		//clear letter from new board
 		newBoard[yCoor][xCoor] = ' ';
-		console.log(rack);
 	}
 	
 	//re render old board
