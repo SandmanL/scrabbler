@@ -6,7 +6,7 @@ Bag of letter tiles for game
 players rack of letters
 	can shuffle letters
 	can swap letters with bag for new set
-	
+
 	to do:
 		manually rearrange letters in rack
 		place letters on board
@@ -45,7 +45,7 @@ function draw() {
 
 	//display and rack
 	renderRack();
-	
+
 	//commit new board to old board
 	for (let i = 0;i<15;i++){
 		for (let j = 0;j<15;j++){
@@ -97,12 +97,12 @@ function shuffle() {
 	renderRack();
 }
 
-function makeTile(letter, index, pos) {
+function makeTile(letter, index, pos = '') {
 	return `<span class="tile" letter="${letter}" index="${index}" ${pos}>${letter}<span class="tileScore">${letterScore(letter)}</span></span>`;
 }
 
 function renderRack() {
-	document.getElementById("rack").innerHTML = rack.map(makeTile).join('');
+	document.getElementById("rack").innerHTML = rack.map((letter, index) => makeTile(letter, index)).join('');
     //letter.style.left = `${x}px`;
 }
 
@@ -121,24 +121,24 @@ document.onclick = function (event) {
 
 
 //places tiles from rack to board
-letterCanvas.onclick = function (event) {
+letterBoard.onclick = function (event) {
 	const x = event.offsetX;
 	const y = event.offsetY;
 	let xCoor = Math.floor(x/HorizSpacing);
 	let yCoor = Math.floor(y/VertSpacing);
-	
+
 	//if a tile from rack is selected && board position is empty
 	if (selectedTile && newBoard[yCoor][xCoor] == ' '){
 		//add selected tile letter to new board
 		newBoard[yCoor][xCoor] = selectedTile.getAttribute('letter');
-		
+
 		//display new board
 		renderLetters(newBoard);
-		
+
 		//remove tile from rack
 		let index = Number(selectedTile.getAttribute('index'));
 		rack.splice(index, 1);
-		
+
 		//re render rack;
 		renderRack();
 		selectedTile = null;
@@ -151,7 +151,7 @@ function reclaimTiles() {
 	let letter = "";
 	let xCoor;
 	let yCoor;
-	
+
 	//find coordinates of tiles placed
 	tilesPlayed();
 	
@@ -163,11 +163,11 @@ function reclaimTiles() {
 		//clear letter from new board
 		newBoard[yCoor][xCoor] = ' ';
 	}
-	
+
 	//re render old board
 	renderLetters(oldBoard);
 	//re render rack
 	renderRack();
-	
-	
+
+
 }
