@@ -27,7 +27,7 @@ Dictates the flow of a turn as:
 */
 
 //tracks turn number
-let turnID = 0;
+let turnID = 1;
 let currentPlayer;
 
 //determining current player
@@ -165,7 +165,7 @@ function submitPlay() {
 	if (isValidPlay()) {
 
 		//show all players the proposed board
-		renderBoard(newBoard);
+		renderLetters(newBoard);
 
 		if(wordsFound.length) {
 			let turnWords = "";
