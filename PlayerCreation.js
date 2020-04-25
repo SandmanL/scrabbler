@@ -4,14 +4,14 @@ Holds player objects with properties:
 	player rack
 	player score
 	player turn rank
-	
+
 Sets up player profiles by asking for number of players and player names.
 */
 
 //assign number of players (from user input with data validation of 2-4 players)
 let numPlayers = 2;
 
-//create players 1 and 2
+//create players (min 2)
 
 let player1 = {
 	name = "Player1";
@@ -37,7 +37,7 @@ if (numPlayers>2)
 		score = 0;
 		order = 3;
 	}
-	
+
 if (numPlayers == 4)
 	player4 = {
 		name = "Player4";

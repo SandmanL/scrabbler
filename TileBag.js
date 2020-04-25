@@ -1,14 +1,14 @@
 /*
 Bag of letter tiles for game
 	Can draw n tiles at a time
-	keeps track of # of tiles in bag
+	keeps tcurrentPlayer.rack of # of tiles in bag
 
-players rack of letters
+players currentPlayer.rack of letters
 	can shuffle letters
 	can swap letters with bag for new set
 
 	to do:
-		manually rearrange letters in rack
+		manually rearrange letters in currentPlayer.rack
 		place letters on board
 		get placed letters back from board
 */
@@ -22,13 +22,12 @@ let bagTiles = ['E','E','E','E','E','E','E','E','E','E','E','E',
 				'B','C','M','P','F','H','B','C','M','P','F','H',
 				'V','W','Y','V','W','Y','K','J','X','Q','Z'];
 
-let rack = [];
 const handSize = 7;
 
 //draw more tiles as the last action in turn;
 function draw() {
 	//find number of tiles to draw
-	let n = handSize - rack.length;
+	let n = handSize - currentPlayer.rack.length;
 
 	//draw new tiles
 	for (let i = 0; i<n;i++){
@@ -36,64 +35,56 @@ function draw() {
 		if (bagTiles.length){
 			//find random position in bag
 			let index=Math.floor(Math.random()*bagTiles.length);
-			//add that letter to rack
-			rack.push(bagTiles[index]);
+			//add that letter to currentPlayer.rack
+			currentPlayer.rack.push(bagTiles[index]);
 			//remove it from bag
 			bagTiles.splice(index, 1);
 		}
 	}
-
-	//display and rack
-	renderRack();
-
-	//commit new board to old board
-	for (let i = 0;i<15;i++){
-		for (let j = 0;j<15;j++){
-			oldBoard[i][j] = newBoard[i][j];
-		}
-	}
-	
-	//increase turn counter
-	turnID++;
 }
 
 function swap() {
+	//return all tiles played to rack
+	reclaimTiles();
 
 	//find number of tiles to swap
-	let n = rack.length;
+	let n = currentPlayer.rack.length;
 
-	//empty rack into bag
+	//empty currentPlayer.rack into bag
 	for (let i = 0; i<n;i++){
-		bagTiles.push(rack.pop());
+		bagTiles.push(currentPlayer.rack.pop());
 	}
 	//draw new tiles
 	draw();
+
+	//pass turn
+	passTurn();
 
 }
 
 function shuffle() {
 
-	//copy rack
+	//copy currentPlayer.rack
 	let reRack = [];
-	reRack = reRack.concat(rack);
+	reRack = reRack.concat(currentPlayer.rack);
 
 	//note length of reRack
 	let n = reRack.length;
 
-	//empty rack
-	rack =[];
+	//empty currentPlayer.rack
+	currentPlayer.rack =[];
 
 	//shuffle
 	for (let i = 0; i<n;i++){
 		//find random position in reRack copy
 		let index=Math.floor(Math.random()*reRack.length);
-		//add that letter to rack
-		rack.push(reRack[index]);
+		//add that letter to currentPlayer.rack
+		currentPlayer.rack.push(reRack[index]);
 		//remove it from reRack copy
 		reRack.splice(index, 1);
 	}
 
-	//display shuffled rack
+	//display shuffled currentPlayer.rack
 	renderRack();
 }
 
@@ -102,11 +93,11 @@ function makeTile(letter, index, pos = '') {
 }
 
 function renderRack() {
-	document.getElementById("rack").innerHTML = rack.map((letter, index) => makeTile(letter, index)).join('');
+	document.getElementById("rack").innerHTML = currentPlayer.rack.map((letter, index) => makeTile(letter, index)).join('');
     //letter.style.left = `${x}px`;
 }
 
-//allows you to select a tile in your rack
+//allows you to select a tile in your currentPlayer.rack
 let selectedTile = null;
 document.onclick = function (event) {
 	const tile = event.target.closest('.tile');
@@ -120,14 +111,14 @@ document.onclick = function (event) {
 }
 
 
-//places tiles from rack to board
+//places tiles from currentPlayer.rack to board
 letterBoard.onclick = function (event) {
 	const x = event.offsetX;
 	const y = event.offsetY;
 	let xCoor = Math.floor(x/HorizSpacing);
 	let yCoor = Math.floor(y/VertSpacing);
 
-	//if a tile from rack is selected && board position is empty
+	//if a tile from currentPlayer.rack is selected && board position is empty
 	if (selectedTile && newBoard[yCoor][xCoor] == ' '){
 		//add selected tile letter to new board
 		newBoard[yCoor][xCoor] = selectedTile.getAttribute('letter');
@@ -135,18 +126,18 @@ letterBoard.onclick = function (event) {
 		//display new board
 		renderLetters(newBoard);
 
-		//remove tile from rack
+		//remove tile from currentPlayer.rack
 		let index = Number(selectedTile.getAttribute('index'));
-		rack.splice(index, 1);
+		currentPlayer.rack.splice(index, 1);
 
-		//re render rack;
+		//re render currentPlayer.rack;
 		renderRack();
 		selectedTile = null;
 	}
 }
 
 
-//returns tiles placed on board this turn back to rack
+//returns tiles placed on board this turn back to currentPlayer.rack
 function reclaimTiles() {
 	let letter = "";
 	let xCoor;
@@ -154,19 +145,19 @@ function reclaimTiles() {
 
 	//find coordinates of tiles placed
 	tilesPlayed();
-	
+
 	for (let i = 0; i<turnCoordinates.length;i++){
 		xCoor = turnCoordinates[i][0];
 		yCoor = turnCoordinates[i][1];
-		//add letter back to rack
-		rack.push(newBoard[yCoor][xCoor]);
+		//add letter back to currentPlayer.rack
+		currentPlayer.rack.push(newBoard[yCoor][xCoor]);
 		//clear letter from new board
 		newBoard[yCoor][xCoor] = ' ';
 	}
 
 	//re render old board
 	renderLetters(oldBoard);
-	//re render rack
+	//re render currentPlayer.rack
 	renderRack();
 
 

@@ -45,12 +45,11 @@
 <button onclick="classic()">Classic</button>
 <button onclick="renderLetters(oldBoard)">Old Board</button>
 <button onclick="renderLetters(newBoard)">New Board</button>
-<button onclick="scoreTurn()">Show Score</button>
-<button onclick="displayTurn()">Show new words</button>
-<button onclick="draw(7)">draw tiles</button>
+<button onclick="submitPlay()">Submit Play</button>
 <button onclick="shuffle()">shuffle rack</button>
 <button onclick="swap()">swap your tiles</button>
 <button onclick="reclaimTiles()">reclaim tiles</button>
+<button onclick="passTurn()">pass turn</button>
 
 </p>
 <div id="playArea" style="position: relative;">
@@ -62,10 +61,11 @@
 
 </div>
 
+<script src="PlayerCreation.js"></script>
+<script src="TurnFlow.js"></script>
 <script src="BoardGenerator.js"></script>
 <script src="BoardScoring.js"></script>
 <script src="TileBag.js"></script>
-<script src="TurnFlow.js"></script>
 </body>
 </html>
 

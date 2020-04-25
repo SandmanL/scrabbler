@@ -199,7 +199,7 @@ to find score
 			}
 		}
 	}
-	
+
 	console.log(isValidPlay());
 
 	//finds top end of a sequence of continuous letters
@@ -296,7 +296,7 @@ to find score
 		}
 		return multi;
 	}
-	
+
 	//scoring new words
 	let wordScore;
 	for (let i =0; i < scoringWords.length;i++){
@@ -307,6 +307,7 @@ to find score
 		turnScore = turnScore + wordScore*wordMultis[i];
 	}
 	console.log("Score for this turn is " + turnScore);
+	return turnScore;
 }
 
 //gets value of a letter
