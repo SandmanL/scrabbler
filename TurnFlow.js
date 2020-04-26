@@ -29,6 +29,7 @@ Dictates the flow of a turn as:
 //tracks turn number
 let turnID = 1;
 let currentPlayer;
+let passCounter = 0;
 
 //determining current player
 function determineCurrentPlayer() {
@@ -71,19 +72,27 @@ function passTurn() {
 
 	//current player receives score of 0
 	alert(currentPlayer.name + " has passed their turn.");
-
+	//increase pass counter
+	passCounter++;
 	//next players turn
 	endTurn();
 }
 
 function endTurn() {
 
-	//commit new board to old board
-	for (let i = 0;i<15;i++){
-		for (let j = 0;j<15;j++){
-			oldBoard[i][j] = newBoard[i][j];
+	//commit new board to old board if there are changes
+	if (tilesPlayed()){
+		for (let i = 0;i<15;i++){
+			for (let j = 0;j<15;j++){
+				oldBoard[i][j] = newBoard[i][j];
+			}
 		}
 	}
+
+	renderLetters(oldBoard);
+
+	if(checkEndGame())
+		return;
 
 	//next players turn
 	turnID++;
@@ -138,7 +147,7 @@ function isValidPlay() {
 		//if word is in line
 		if (isInLine()) {
 			//check coordinates of tiles placed to see if starting tile is used
-			for (let i=0;i<turnCoordinates.length;i++){
+			for (let i=0;i<tilesUsed;i++){
 				//compare x value
 				if (turnCoordinates[i][0] == 7) {
 					//compare y value
@@ -168,16 +177,16 @@ function submitPlay() {
 		renderLetters(newBoard);
 
 		if(wordsFound.length) {
-			let turnWords = "";
+			let turnWords = wordsFound.join(", ");
 
-			for(let i=0;i<wordsFound.length;i++)
-				turnWords += wordsFound[i] + "\n";
-
-			alert(currentPlayer.name + " has played the words: \n" + turnWords + "\nTotal score for this turn: "+ score +"\n\nWould you like to challenge this play?");
-
+			alert(currentPlayer.name + " has played the word(s): \n\n" + turnWords + "\n\nTotal score for this turn: "+ score +"\n\nWould you like to challenge this play?");
 
 			//TODO: add code for challenge
 
+			//add score to player's total
+			currentPlayer.score += score;
+			//reset pass counter
+			passCounter = 0;
 			endTurn();
 		} else {
 			//no words played
@@ -189,4 +198,25 @@ function submitPlay() {
 
 		reclaimTiles();
 	}
+}
+
+function checkEndGame(){
+	//check for empty tile bag
+	if (bagTiles.length == 0){
+		let finalScores = "";
+		//check if current player has gon if there are changes
+		if (e out
+		if(currentPlayer.rack.length == 0 || passCounter == numPlayers){ 
+			finalScores += player1.name + ": " + player1.score + "\n";
+			finalScores += player3.name + ": " + player3.score + "\n";
+			if (numPlayers > 2)
+				finalScores += player3.name + ": " + player3.score + "\n";
+			if (numPlayers == 4)
+				finalScores += player4.name + ": " + player4.score + "\n";
+			alert("The game has ended! The final scores are:\n\n" + finalScores + "\nThank you for playing!");
+			return true;
+		}
+	}
+
+	return false;
 }

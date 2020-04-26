@@ -108,6 +108,7 @@ function tilesPlayed() {
 			}
 		}
 	}
+	return turnCoordinates.length;
 }
 
 function scoreTurn(){
@@ -130,10 +131,10 @@ to find score
 	let turnScore = 0;
 
 	// find coordinates of new letters played
-	tilesPlayed();
+	let tilesUsed = tilesPlayed();
 
 	//only one new tile placed
-	if (turnCoordinates.length==1){
+	if (tilesUsed==1){
 		let xCoor = turnCoordinates[0][0];
 		let yCoor = turnCoordinates[0][1];
 
@@ -152,7 +153,7 @@ to find score
 		wordMultis.push(getVertMulti(xCoor,top,bot));
 
 	//more than one new tile placed
-	}else if(turnCoordinates.length>1){
+	}else if(tilesUsed>1){
 		//check if new word is vertical
 		if(turnCoordinates[0][0]==turnCoordinates[1][0]){
 			//find longest vertical word
@@ -165,7 +166,7 @@ to find score
 			wordMultis.push(getVertMulti(xCoor,top,bot));
 
 			//for each new tile, look for new words horizontally
-			for (let i = 0; i<turnCoordinates.length;i++){
+			for (let i = 0; i<tilesUsed;i++){
 				xCoor = turnCoordinates[i][0];
 				yCoor = turnCoordinates[i][1];
 				let left = findLeft(xCoor,yCoor);
@@ -187,7 +188,7 @@ to find score
 			wordMultis.push(getHorizMulti(left,right,yCoor));
 
 			//for each new tile, look for new words vertically
-			for (let i = 0; i<turnCoordinates.length;i++){
+			for (let i = 0; i<tilesUsed;i++){
 				xCoor = turnCoordinates[i][0];
 				yCoor = turnCoordinates[i][1];
 				let top = findTop(xCoor,yCoor);

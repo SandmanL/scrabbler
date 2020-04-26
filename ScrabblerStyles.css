@@ -1,0 +1,76 @@
+.tile {
+    display: inline-block;
+    width: 38px;
+    height: 38px;
+    font-size: 24px;
+    font-family: Helvetica;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: rgba(255,255,200,0.75);
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+    position: relative;
+    margin-right: 1px;
+}
+.tile.selected {
+    border-color: red;
+	bottom: 10px;
+}
+.tileScore {
+    position: absolute;
+    right: 2px;
+    bottom: -2px;
+    font-size: 10px;
+    line-height: 16px;
+}
+.rack {
+	position: absolute;
+	left: 900px;
+	top: 40px;
+	z-index: 5;
+}
+#letterBoard {
+	position: relative;
+	cursor: pointer;
+}
+.msgBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80%;
+}
+.msgBox{
+    transform: translate(-50%,-50%) scale(1);
+}
+.msgBoxContent {
+    padding: 10px 15px;
+}
+.msgBoxButton {
+    cursor: pointer;
+    font-weight: bold;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+.shade {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease- in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background-color: rgba(0,0,0,.5);
+}
+.shade.active {
+    opacity: 1;
+    pointer-events: all;
+}

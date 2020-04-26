@@ -57,8 +57,10 @@ function swap() {
 	//draw new tiles
 	draw();
 
-	//pass turn
-	passTurn();
+	alert("All your tiles have been collected and you have been given a new set of tiles! Your turn is ending.");
+
+	//end current turn
+	endTurn();
 
 }
 
@@ -139,14 +141,14 @@ letterBoard.onclick = function (event) {
 
 //returns tiles placed on board this turn back to currentPlayer.rack
 function reclaimTiles() {
-	let letter = "";
+	//let letter = "";
 	let xCoor;
 	let yCoor;
 
 	//find coordinates of tiles placed
-	tilesPlayed();
+	let tilesUsed = tilesPlayed();
 
-	for (let i = 0; i<turnCoordinates.length;i++){
+	for (let i = 0; i<tilesUsed;i++){
 		xCoor = turnCoordinates[i][0];
 		yCoor = turnCoordinates[i][1];
 		//add letter back to currentPlayer.rack
