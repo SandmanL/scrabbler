@@ -25,9 +25,9 @@ let bagTiles = ['E','E','E','E','E','E','E','E','E','E','E','E',
 const handSize = 7;
 
 //draw more tiles as the last action in turn;
-function draw() {
+function draw(player = currentPlayer) {
 	//find number of tiles to draw
-	let n = handSize - currentPlayer.rack.length;
+	let n = handSize - player.rack.length;
 
 	//draw new tiles
 	for (let i = 0; i<n;i++){
@@ -36,7 +36,7 @@ function draw() {
 			//find random position in bag
 			let index=Math.floor(Math.random()*bagTiles.length);
 			//add that letter to currentPlayer.rack
-			currentPlayer.rack.push(bagTiles[index]);
+			player.rack.push(bagTiles[index]);
 			//remove it from bag
 			bagTiles.splice(index, 1);
 		}
@@ -54,40 +54,43 @@ function swap() {
 	for (let i = 0; i<n;i++){
 		bagTiles.push(currentPlayer.rack.pop());
 	}
+	//render an empty rack
+	renderRack();
+
 	//draw new tiles
 	draw();
 
-	alert("All your tiles have been collected and you have been given a new set of tiles! Your turn is ending.");
-
 	//end current turn
-	endTurn();
+	openMsgBox("All your tiles have been collected and you will be given a new set of tiles on your next turn!",endTurn);
 
 }
 
 function shuffle() {
 
-	//copy currentPlayer.rack
+	//copy array
 	let reRack = [];
 	reRack = reRack.concat(currentPlayer.rack);
 
 	//note length of reRack
 	let n = reRack.length;
 
-	//empty currentPlayer.rack
+	//empty arrray
 	currentPlayer.rack =[];
 
 	//shuffle
 	for (let i = 0; i<n;i++){
-		//find random position in reRack copy
+		//find random position in copy
 		let index=Math.floor(Math.random()*reRack.length);
-		//add that letter to currentPlayer.rack
+		//add that letter to array
 		currentPlayer.rack.push(reRack[index]);
-		//remove it from reRack copy
+		//remove it from copy
 		reRack.splice(index, 1);
 	}
 
-	//display shuffled currentPlayer.rack
-	renderRack();
+	//to shuffle bag tiles in game setup (why cant I shuffle the bag?)
+	if (turnID>0)
+	//display shuffled array
+		renderRack();
 }
 
 function makeTile(letter, index, pos = '') {

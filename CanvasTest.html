@@ -22,9 +22,16 @@
  <div id="letterBoard"></div>
  <span id="bag"></span>
  <span id="rack" class ="rack"></span>
-
+ <div id="messageBox" class="msgBox">
+     <div id="message" class ="msgBoxContent">This is a message designed to notify or ask you for something</div>
+     <div id="button" class = "msgBoxContent" style="text-align: center;">
+        <button id="messageButton" class="msgBoxButton" onclick="closeMsgBox()">OK</button>
+     </div>
+ </div>
+ <div id="shade" class="shade"></div>
 </div>
 
+<script src="Notifications.js"></script>
 <script src="TurnFlow.js"></script>
 <script src="BoardGenerator.js"></script>
 <script src="BoardScoring.js"></script>

@@ -27,7 +27,7 @@ Dictates the flow of a turn as:
 */
 
 //tracks turn number
-let turnID = 1;
+let turnID = 0;
 let currentPlayer;
 let passCounter = 0;
 
@@ -55,14 +55,15 @@ function determineCurrentPlayer() {
 
 //starting a turn
 function turnStart() {
+	turnID++;
 
 	determineCurrentPlayer();
 
-	alert(currentPlayer.name + ", it's your turn!");
-
 	draw();
 
-	renderRack();
+	openMsgBox(currentPlayer.name + ", it's your turn!",renderRack);
+
+	//renderRack();
 }
 
 //passing turn
@@ -70,12 +71,10 @@ function passTurn() {
 
 	reclaimTiles();
 
-	//current player receives score of 0
-	alert(currentPlayer.name + " has passed their turn.");
 	//increase pass counter
 	passCounter++;
 	//next players turn
-	endTurn();
+	openMsgBox(currentPlayer.name + " has passed their turn.",endTurn);
 }
 
 function endTurn() {
@@ -91,14 +90,10 @@ function endTurn() {
 
 	renderLetters(oldBoard);
 
-	if(checkEndGame())
-		return;
-
-	//next players turn
-	turnID++;
-
-	turnStart();
-
+	if(!checkEndGame()) {
+		//next players turn
+		turnStart();
+	}
 }
 //validates proposed play
 function isValidPlay() {
@@ -164,7 +159,6 @@ function isValidPlay() {
 
 	//default to valid play
 	return true;
-
 }
 
 function submitPlay() {
@@ -179,7 +173,8 @@ function submitPlay() {
 		if(wordsFound.length) {
 			let turnWords = wordsFound.join(", ");
 
-			alert(currentPlayer.name + " has played the word(s): \n\n" + turnWords + "\n\nTotal score for this turn: "+ score +"\n\nWould you like to challenge this play?");
+			openMsgBox(currentPlayer.name + " has played the word(s): <br/><br/>" + turnWords
+				+ "<br/><br/>Total score for this turn: "+ score +"<br/><br/>Would you like to challenge this play?", endTurn);
 
 			//TODO: add code for challenge
 
@@ -187,33 +182,32 @@ function submitPlay() {
 			currentPlayer.score += score;
 			//reset pass counter
 			passCounter = 0;
-			endTurn();
+
 		} else {
 			//no words played
 			passTurn();
 		}
 
 	} else {
-		alert("This is not a valid play! Try again.");
 
-		reclaimTiles();
+		openMsgBox("This is not a valid play! Try again.",reclaimTiles);
+
 	}
 }
 
 function checkEndGame(){
 	//check for empty tile bag
 	if (bagTiles.length == 0){
-		let finalScores = "";
-		//check if current player has gon if there are changes
-		if (e out
-		if(currentPlayer.rack.length == 0 || passCounter == numPlayers){ 
-			finalScores += player1.name + ": " + player1.score + "\n";
-			finalScores += player3.name + ": " + player3.score + "\n";
+		//check if current player has gone out or if all players have passed.
+		if(currentPlayer.rack.length == 0 || passCounter >= numPlayers){
+			let finalScores = "";
+			finalScores += player1.name + ": " + player1.score + "<br/>";
+			finalScores += player2.name + ": " + player2.score + "<br/>";
 			if (numPlayers > 2)
-				finalScores += player3.name + ": " + player3.score + "\n";
+				finalScores += player3.name + ": " + player3.score + "<br/>";
 			if (numPlayers == 4)
-				finalScores += player4.name + ": " + player4.score + "\n";
-			alert("The game has ended! The final scores are:\n\n" + finalScores + "\nThank you for playing!");
+				finalScores += player4.name + ": " + player4.score + "<br/>";
+			openMsgBox("The game has ended! The final scores are:<br/><br/>" + finalScores + "<br/>Thank you for playing!");
 			return true;
 		}
 	}
