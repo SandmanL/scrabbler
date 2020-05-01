@@ -163,7 +163,7 @@ function isValidPlay() {
 
 function submitPlay() {
 
-	let score = scoreTurn();
+	scoreTurn();
 
 	if (isValidPlay()) {
 
@@ -173,13 +173,10 @@ function submitPlay() {
 		if(wordsFound.length) {
 			let turnWords = wordsFound.join(", ");
 
-			openMsgBox(currentPlayer.name + " has played the word(s): <br/><br/>" + turnWords
-				+ "<br/><br/>Total score for this turn: "+ score +"<br/><br/>Would you like to challenge this play?", endTurn);
+			openMsgBoxInput(currentPlayer.name + " has played the word(s): <br/><br/>" + turnWords
+				+ "<br/><br/>Total score for this turn: "+ turnScore
+				+ "<br/><br/>Would you like to challenge this play? (yes/no)", challengePlay);
 
-			//TODO: add code for challenge
-
-			//add score to player's total
-			currentPlayer.score += score;
 			//reset pass counter
 			passCounter = 0;
 
@@ -192,6 +189,30 @@ function submitPlay() {
 
 		openMsgBox("This is not a valid play! Try again.",reclaimTiles);
 
+	}
+}
+
+function challengePlay() {
+	//get contents of textbox
+	recordInput();
+
+	if (textBoxContent[0].toLowerCase() == 'y') {
+		//array of words not found in dictionary
+		let notWords = wordsFound.filter(word => !dictionary.includes(word.toLowerCase()));
+		
+		//if array isnt empty
+		if (notWords.legnth) {
+			openMsgBox("The challenge has suceeded! The invalid word(s) is/are:<br/><br/>" + notWords.join(", ")
+				+ "<br/><br/>" + currentPlayer.name + " will forfeit their turn.", endTurn);
+			reclaimTiles();
+		} else {
+			openMsgBox("The challenge has failed! The challenger will lose 20 points!", endTurn);
+			//TODO: challenger loses 20 points
+			currentPlayer.score += turnScore;
+		}
+	} else {
+		currentPlayer.score += turnScore;
+		endTurn();
 	}
 }
 

@@ -53,7 +53,7 @@ let newBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']];
 
 let letterValues = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
-
+let turnScore;
 let wordsFound = [];
 let turnCoordinates = [];
 
@@ -128,7 +128,6 @@ to find score
 	wordsFound =[];
 	let scoringWords = [];
 	let wordMultis = [];
-	let turnScore = 0;
 
 	// find coordinates of new letters played
 	let tilesUsed = tilesPlayed();
@@ -200,8 +199,6 @@ to find score
 			}
 		}
 	}
-
-	console.log(isValidPlay());
 
 	//finds top end of a sequence of continuous letters
 	function findTop(x,y){
@@ -307,7 +304,6 @@ to find score
 		}
 		turnScore = turnScore + wordScore*wordMultis[i];
 	}
-	console.log("Score for this turn is " + turnScore);
 	return turnScore;
 }
 
