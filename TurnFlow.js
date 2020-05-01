@@ -95,6 +95,7 @@ function endTurn() {
 		turnStart();
 	}
 }
+
 //validates proposed play
 function isValidPlay() {
 
@@ -120,8 +121,17 @@ function isValidPlay() {
 	if (tilesUsed == 0)
 		return true;
 
-	//check if its not the first turn of the game
-	if(turnID-1) {
+	//check if it's the first word of the game (if center tile is empty)
+	if(oldBoard[7][7] == " ") {
+
+		//first word cannot be a one letter word
+		if (tilesUsed == 1)
+			return false;
+
+		//valid if word is inline and center tile is not empty
+		return (isInLine()&&newBoard[7][7] != " ");
+
+	} else {
 		//check for unconnected word
 
 		//count length of primary word played
@@ -134,27 +144,6 @@ function isValidPlay() {
 
 		//if word is connected, check if it is in line
 		return isInLine();
-	} else {
-		//first word cannot be a one letter word
-		if (tilesUsed == 1)
-			return false;
-
-		//if word is in line
-		if (isInLine()) {
-			//check coordinates of tiles placed to see if starting tile is used
-			for (let i=0;i<tilesUsed;i++){
-				//compare x value
-				if (turnCoordinates[i][0] == 7) {
-					//compare y value
-					if (turnCoordinates[i][1] == 7)
-						//if one matches then play is valid
-						return true;
-				}
-			}
-		}
-
-		//if none match or word is not in line, then play is invalid
-		return false;
 	}
 
 	//default to valid play
@@ -201,7 +190,7 @@ function challengePlay() {
 		let notWords = wordsFound.filter(word => !dictionary.includes(word.toLowerCase()));
 		
 		//if array isnt empty
-		if (notWords.legnth) {
+		if (notWords.length) {
 			openMsgBox("The challenge has suceeded! The invalid word(s) is/are:<br/><br/>" + notWords.join(", ")
 				+ "<br/><br/>" + currentPlayer.name + " will forfeit their turn.", endTurn);
 			reclaimTiles();
