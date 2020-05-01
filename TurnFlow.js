@@ -56,7 +56,7 @@ function determineCurrentPlayer() {
 //starting a turn
 function turnStart() {
 	turnID++;
-
+	turnScore = 0;
 	determineCurrentPlayer();
 
 	draw();
