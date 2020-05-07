@@ -28,6 +28,7 @@ Dictates the flow of a turn as:
 
 //tracks turn number
 let turnID = 0;
+
 let currentPlayer;
 let passCounter = 0;
 
@@ -187,12 +188,13 @@ function challengePlay() {
 
 	if (textBoxContent[0].toLowerCase() == 'y') {
 		//array of words not found in dictionary
-		let notWords = wordsFound.filter(word => !dictionary.includes(word.toLowerCase()));
-		
+		let notWords = wordsFound.filter(word => word.length<9&&!dictionary.includes(word.toLowerCase()));
+
 		//if array isnt empty
 		if (notWords.length) {
-			openMsgBox("The challenge has suceeded! The invalid word(s) is/are:<br/><br/>" + notWords.join(", ")
-				+ "<br/><br/>" + currentPlayer.name + " will forfeit their turn.", endTurn);
+			openMsgBox("The challenge has succeeded! The invalid word(s) is/are:<br/><br/>"
+				+ notWords.join(", ") + "<br/><br/>"
+				+ currentPlayer.name + " will forfeit their turn.", endTurn);
 			reclaimTiles();
 		} else {
 			openMsgBox("The challenge has failed! The challenger will lose 20 points!", endTurn);
@@ -217,7 +219,8 @@ function checkEndGame(){
 				finalScores += player3.name + ": " + player3.score + "<br/>";
 			if (numPlayers == 4)
 				finalScores += player4.name + ": " + player4.score + "<br/>";
-			openMsgBox("The game has ended! The final scores are:<br/><br/>" + finalScores + "<br/>Thank you for playing!");
+			openMsgBox("The game has ended! The final scores are:<br/><br/>"
+				+ finalScores + "<br/>Thank you for playing!");
 			return true;
 		}
 	}

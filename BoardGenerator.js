@@ -73,7 +73,7 @@ function grid() {
 		//board.moveTo(0, i*VertSpacing);
 		//board.lineTo(boardW, i*VertSpacing);
 		board.fillRect(0,i*VertSpacing,boardW,1);
-		
+
 	}
 	//board.stroke();
 }
