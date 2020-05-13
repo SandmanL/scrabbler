@@ -44,6 +44,7 @@ function turnStart() {
 	turnID++;
 	turnScore = 0;
 	displayScores();
+	wordsFound = [];
 	determineCurrentPlayer();
 
 	draw();
@@ -142,7 +143,6 @@ function submitPlay() {
 	scoreTurn();
 
 	if (isValidPlay()) {
-
 		//show all players the proposed board
 		renderLetters(newBoard);
 
@@ -172,9 +172,9 @@ function challengePlay() {
 	//get contents of textbox
 	recordInput();
 
-	if (textBoxContent[0].toLowerCase() == 'y') {
+	if (textBoxContent[0] && textBoxContent[0].toLowerCase() == 'y') {
 		//array of words not found in dictionary
-		let notWords = wordsFound.filter(word => word.length<9&&!dictionary.includes(word.toLowerCase()));
+		let notWords = wordsFound.filter(word => word.length<9 && !dictionary.includes(word.toLowerCase()));
 
 		//if array isnt empty
 		if (notWords.length) {

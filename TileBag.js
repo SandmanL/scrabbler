@@ -93,19 +93,23 @@ function shuffle() {
 		renderRack();
 }
 
-function makeTile(letter, index, pos = '') {
-	return `<span class="tile" letter="${letter}" index="${index}" ${pos}>${letter}<span class="tileScore">${letterScore(letter)}</span></span>`;
+function makeBoardTile(letter, x, y) {
+	return `<span class="boardTile" letter="${letter}" style = "top: ${y}px; left: ${x}px; position: absolute;">${letter}<span class="tileScore">${letterScore(letter)}</span></span>`;
+}
+
+function makeRackTile(letter, index) {
+	return `<span class="rackTile" letter="${letter}" index="${index}">${letter}<span class="tileScore">${letterScore(letter)}</span></span>`;
 }
 
 function renderRack() {
-	document.getElementById("rack").innerHTML = currentPlayer.rack.map((letter, index) => makeTile(letter, index)).join('');
-    //letter.style.left = `${x}px`;
+	document.getElementById("rack").innerHTML = currentPlayer.rack.map((letter, index) => makeRackTile(letter, index)).join('');
+	selectedTile = null;
 }
 
 //allows you to select a tile in your currentPlayer.rack
 let selectedTile = null;
 document.onclick = function (event) {
-	const tile = event.target.closest('.tile');
+	const tile = event.target.closest('.rackTile');
 	if (tile) {
 		if (selectedTile) {
 			selectedTile.classList.remove('selected');
@@ -118,11 +122,11 @@ document.onclick = function (event) {
 
 //places tiles from currentPlayer.rack to board
 letterBoard.onclick = function (event) {
-	const x = event.offsetX;
-	const y = event.offsetY;
+	const x = event.pageX - 9;
+	const y = event.pageY - 54;
 	let xCoor = Math.floor(x/HorizSpacing);
 	let yCoor = Math.floor(y/VertSpacing);
-
+	//console.log(xCoor,yCoor,newBoard[yCoor][xCoor]);
 	//if a tile from currentPlayer.rack is selected && board position is empty
 	if (selectedTile && newBoard[yCoor][xCoor] == ' '){
 		//add selected tile letter to new board
@@ -137,7 +141,6 @@ letterBoard.onclick = function (event) {
 
 		//re render currentPlayer.rack;
 		renderRack();
-		selectedTile = null;
 	}
 }
 
@@ -164,6 +167,4 @@ function reclaimTiles() {
 	renderLetters(oldBoard);
 	//re render currentPlayer.rack
 	renderRack();
-
-
 }

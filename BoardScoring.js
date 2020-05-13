@@ -67,7 +67,7 @@ function renderLetters(array){
 	//let tile = null;
 	let x;
 	let y;
-	let pos = "";
+	//let pos = "";
 	//draw new letter array
 	for (let i=0; i<15;i++){
 		for (let j=0; j<15;j++) {
@@ -75,8 +75,8 @@ function renderLetters(array){
 				//attempt with makeTile function directly
 				x = j*HorizSpacing+2;
 				y = i*VertSpacing+2;
-				pos = `style = "top: ${y}px; left: ${x}px; position: absolute;"`;
-				newHTML += makeTile(array[i][j],-1,pos);
+				//pos = `style = "top: ${y}px; left: ${x}px; position: absolute;"`;
+				newHTML += makeBoardTile(array[i][j],x,y);
 
 				//Attempt with style setting
 				//tile.style.left = `${x}px`;
@@ -125,7 +125,8 @@ to find score
 
 
 */
-	wordsFound =[];
+	wordsFound = [];
+	turnScore = 0;
 	let scoringWords = [];
 	let wordMultis = [];
 
@@ -304,6 +305,9 @@ to find score
 		}
 		turnScore = turnScore + wordScore*wordMultis[i];
 	}
+	//bonus for using 7 tiles
+	if(tilesUsed == 7)
+		turnScore += 25;
 	return turnScore;
 }
 
@@ -312,7 +316,7 @@ function letterScore(letter) {
 	return letterValues[letter.charCodeAt(0)-65];
 }
 
-//Shows words played during current turn
+//Shows words played and score of current move
 function displayTurn(){
-	console.log(wordsFound);
+	openMsgBox(scoreTurn() + " " + wordsFound);
 }
