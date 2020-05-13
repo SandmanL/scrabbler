@@ -5,23 +5,31 @@
 </head>
 <body>
 <p>
-<button onclick="randomized()">Random</button>
-<button onclick="classic()">Classic</button>
-<button onclick="renderLetters(oldBoard)">Old Board</button>
-<button onclick="renderLetters(newBoard)">New Board</button>
-<button onclick="submitPlay()">Submit Play</button>
-<button onclick="shuffle()">shuffle rack</button>
-<button onclick="swap()">swap your tiles</button>
-<button onclick="reclaimTiles()">reclaim tiles</button>
-<button onclick="passTurn()">pass turn</button>
-
+<button onclick="randomized()">Random Board</button>
+<button onclick="classic()">Classic Board</button>
 </p>
 <div id="playArea" style="position: relative;">
  <canvas id="boardCanvas" width="66" height="66"
    style="border:1px solid #c3c3c3; position: absolute; left: 0; top: 0;"></canvas>
  <div id="letterBoard"></div>
+ <span id="playerArea" class="playerArea">
+     <div id="submitButton" class="buttons">
+        <button onclick="submitPlay()">Submit Play</button>
+     </div>
+     <div id="rackDiv" class="rackDiv">
+        <span id="rack" class ="rack"></span>
+     </div>
+     <div id="playButtonsTop" class="buttons">
+        <button onclick="shuffle()">Shuffle Letters</button>
+        <button onclick="reclaimTiles()">Reclaim Letters</button>
+
+     </div>
+     <div id="playButtonsBelow" class="buttons">
+        <button onclick="swap()">Exchange Letters</button>
+        <button onclick="passTurn()">Pass Turn</button>
+     </div>
+ </span>
  <span id="bag"></span>
- <span id="rack" class ="rack"></span>
  <div id="messageBox" class="msgBox">
      <div id="message" class ="msgBoxContent">This is a message designed to notify or ask you for something</div>
      <div id="button" class = "msgBoxContent" style="text-align: center;">

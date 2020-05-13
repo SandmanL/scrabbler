@@ -13,40 +13,34 @@ let numPlayers = 2;
 
 //create players (min 2)
 
-let player1 = {
+let players = [{
 	name: "Player1",
 	rack: [],
 	score: 0,
 	order: 1,
-};
-
-let player2 = {
+}, {
 	name: "Player2",
 	rack: [],
 	score: 0,
 	order: 2,
-};
-
-let player3;
-let player4;
+}];
 
 function createPlayers(quantity){
-	numPlayers = quantity;
-	if (numPlayers>2)
-		player3 = {
+	if (quantity>2)
+		players.push({
 			name: "Player3",
 			rack: [],
 			score: 0,
 			order: 3,
-		};
+		});
 
-	if (numPlayers == 4)
-		player4 = {
+	if (quantity == 4)
+		players.push({
 			name: "Player4",
 			rack: [],
 			score: 0,
 			order: 4,
-		};
+		});
 }
 function gameSetup1() {
 	openMsgBoxInput("How many people will be playing today?", gameSetup2);
@@ -54,12 +48,12 @@ function gameSetup1() {
 
 function gameSetup2() {
 	recordInput();
-	let players = parseInt(textBoxContent, 10);
-	if (players != 2 && players != 3 && players != 4)
+	numPlayers = parseInt(textBoxContent, 10);
+	if (numPlayers != 2 && numPlayers != 3 && numPlayers != 4)
 		openMsgBox("Please enter a valid number of players (2, 3, or 4).", gameSetup1);
 	else {
-		createPlayers(players);
-		openMsgBox("Great! Now, let's record the names of these " + players + " players.", gameSetup3);
+		createPlayers(numPlayers);
+		openMsgBox("Great! Now, let's record the names of these " + numPlayers + " players.", gameSetup3);
 		//shuffle(bagTiles);
 	}
 }
@@ -70,15 +64,15 @@ function gameSetup3() {
 
 function gameSetup4() {
 	recordInput();
-	player1.name = textBoxContent;
-	draw(player1);
+	players[0].name = textBoxContent;
+	draw(players[0]);
 	openMsgBoxInput("Player 2, please enter your name:", gameSetup5);
 }
 
 function gameSetup5() {
 	recordInput();
-	player2.name = textBoxContent;
-	draw(player2);
+	players[1].name = textBoxContent;
+	draw(players[1]);
 	if (numPlayers>2)
 		openMsgBoxInput("Player 3, please enter your name:", gameSetup6);
 	else
@@ -87,8 +81,8 @@ function gameSetup5() {
 
 function gameSetup6() {
 	recordInput();
-	player3.name = textBoxContent;
-	draw(player3);
+	players[2].name = textBoxContent;
+	draw(players[2]);
 	if(numPlayers==4)
 		openMsgBoxInput("Player 4, please enter your name:", gameSetup7);
 	else
@@ -97,8 +91,8 @@ function gameSetup6() {
 
 function gameSetup7() {
 	recordInput();
-	player4.name = textBoxContent;
-	draw(player4);
+	players[3].name = textBoxContent;
+	draw(players[3]);
 	openMsgBox("All done! Let's play!", turnStart);
 }
 

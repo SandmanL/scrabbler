@@ -29,7 +29,7 @@ function closeMsgBox(callback) {
 }
 
 function openMsgBoxInput(message, callback = recordInput) {
-	let text = message + `<br/><input id="inputBox" placeholder="type here">`;
+	let text = message + `<br/><input id="inputBox" placeholder="type here" style="margin: 5px 0px;">`;
 	msg.innerHTML = text;
 	button.innerHTML = "Submit";
 	shade.classList.add("active");

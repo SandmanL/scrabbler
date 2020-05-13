@@ -33,23 +33,8 @@ let passCounter = 0;
 
 //determining current player
 function determineCurrentPlayer() {
-	switch((turnID+numPlayers-1)%numPlayers) {
-		case 0:
-			currentPlayer = player1;
-			break;
-		case 1:
-			currentPlayer = player2;
-			break;
-		case 2:
-			currentPlayer = player3;
-			break;
-		case 3:
-			currentPlayer = player4;
-			break;
-		default:
-			currentPlayer = player1;
-			alert("Could not find current player");
-	}
+	let index = (turnID+numPlayers-1)%numPlayers;
+	currentPlayer = players[index];
 }
 
 
@@ -57,6 +42,7 @@ function determineCurrentPlayer() {
 function turnStart() {
 	turnID++;
 	turnScore = 0;
+	displayScores();
 	determineCurrentPlayer();
 
 	draw();
@@ -188,7 +174,7 @@ function challengePlay() {
 	if (textBoxContent[0].toLowerCase() == 'y') {
 		//array of words not found in dictionary
 		let notWords = wordsFound.filter(word => !dictionary.includes(word.toLowerCase()));
-		
+
 		//if array isnt empty
 		if (notWords.length) {
 			openMsgBox("The challenge has suceeded! The invalid word(s) is/are:<br/><br/>" + notWords.join(", ")
@@ -211,12 +197,9 @@ function checkEndGame(){
 		//check if current player has gone out or if all players have passed.
 		if(currentPlayer.rack.length == 0 || passCounter >= numPlayers){
 			let finalScores = "";
-			finalScores += player1.name + ": " + player1.score + "<br/>";
-			finalScores += player2.name + ": " + player2.score + "<br/>";
-			if (numPlayers > 2)
-				finalScores += player3.name + ": " + player3.score + "<br/>";
-			if (numPlayers == 4)
-				finalScores += player4.name + ": " + player4.score + "<br/>";
+			for (let i = 0; i<numPlayers; i++) {
+				finalScores += players[i].name + ": " + players[i].score + "<br/>";
+			}
 			openMsgBox("The game has ended! The final scores are:<br/><br/>" + finalScores + "<br/>Thank you for playing!");
 			return true;
 		}

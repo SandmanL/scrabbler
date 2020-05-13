@@ -1,3 +1,12 @@
+button {
+    padding: 10px;
+    margin: 0px 15px;
+    border-radius: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: rgba(55,155,255,0.75);
+}
 .tile {
     display: inline-block;
     width: 38px;
@@ -24,11 +33,19 @@
     font-size: 10px;
     line-height: 16px;
 }
-.rack {
-	position: absolute;
-	left: 900px;
-	top: 40px;
-	z-index: 5;
+.rackDiv {
+    padding: 20px 0px;
+}
+.playerArea {
+    position: absolute;
+    left: 866px;
+    top: 0px;
+    height: 616px;
+    width:  400px;
+    text-align: center;
+}
+.buttons {
+    padding: 20px;
 }
 #letterBoard {
 	position: relative;
@@ -53,12 +70,6 @@
     font-family: "Lucida Sans Unicode";
     font-size: 18px;
     padding: 10px 15px;
-}
-.msgBoxButton {
-    cursor: pointer;
-    font-weight: bold;
-    border: 1px solid grey;
-    border-radius: 5px;
 }
 .shade {
     position: fixed;

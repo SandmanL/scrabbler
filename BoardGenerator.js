@@ -61,6 +61,32 @@ function legend() {
 
 }
 
+function displayScores() {
+	const gap = 30;
+	let txt = "Error";
+	board.font="20px Georgia";
+	board.fillStyle = "#000000";
+	board.textBaseline = "middle";
+	const midline = boardH - gap - 130;
+
+	board.beginPath();
+	board.moveTo(boardW + legendW - gap, boardH - gap);
+	board.lineTo(boardW + legendW - gap, boardH - gap - 260);
+	board.lineTo(boardW + gap, boardH - gap - 260);
+	board.lineTo(boardW + gap, boardH - gap);
+	board.closePath();
+	board.stroke();
+
+	let y = midline - (numPlayers*2-1)/2*gap;
+	for (let i = 0; i<numPlayers;i++) {
+		txt = players[i].name + ": ";
+		board.fillText(txt, boardW + gap*2, y);
+		txt = players[i].score + " points";
+		board.fillText(txt, boardW + gap*4, y + gap);
+		y += gap*2;
+	}
+}
+
 function grid() {
 	//board.beginPath();
 	board.fillStyle = "grey";
@@ -73,7 +99,7 @@ function grid() {
 		//board.moveTo(0, i*VertSpacing);
 		//board.lineTo(boardW, i*VertSpacing);
 		board.fillRect(0,i*VertSpacing,boardW,1);
-		
+
 	}
 	//board.stroke();
 }
