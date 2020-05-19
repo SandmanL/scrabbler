@@ -14,12 +14,12 @@ let numPlayers = 2;
 //create players (min 2)
 
 let players = [{
-	name: "Player1",
+	name: "Player 1",
 	rack: [],
 	score: 0,
 	order: 1,
 }, {
-	name: "Player2",
+	name: "Player 2",
 	rack: [],
 	score: 0,
 	order: 2,
@@ -28,7 +28,7 @@ let players = [{
 function createPlayers(quantity){
 	if (quantity>2)
 		players.push({
-			name: "Player3",
+			name: "Player 3",
 			rack: [],
 			score: 0,
 			order: 3,
@@ -36,7 +36,7 @@ function createPlayers(quantity){
 
 	if (quantity == 4)
 		players.push({
-			name: "Player4",
+			name: "Player 4",
 			rack: [],
 			score: 0,
 			order: 4,
@@ -64,14 +64,16 @@ function gameSetup3() {
 
 function gameSetup4() {
 	recordInput();
-	players[0].name = textBoxContent;
+	if (textBoxContent.length)
+		players[0].name = textBoxContent;
 	draw(players[0]);
 	openMsgBoxInput("Player 2, please enter your name:", gameSetup5);
 }
 
 function gameSetup5() {
 	recordInput();
-	players[1].name = textBoxContent;
+	if (textBoxContent.length)
+		players[1].name = textBoxContent;
 	draw(players[1]);
 	if (numPlayers>2)
 		openMsgBoxInput("Player 3, please enter your name:", gameSetup6);
@@ -81,7 +83,8 @@ function gameSetup5() {
 
 function gameSetup6() {
 	recordInput();
-	players[2].name = textBoxContent;
+	if (textBoxContent.length)
+		players[2].name = textBoxContent;
 	draw(players[2]);
 	if(numPlayers==4)
 		openMsgBoxInput("Player 4, please enter your name:", gameSetup7);
@@ -91,10 +94,10 @@ function gameSetup6() {
 
 function gameSetup7() {
 	recordInput();
-	players[3].name = textBoxContent;
+	if (textBoxContent.length)
+		players[3].name = textBoxContent;
 	draw(players[3]);
 	openMsgBox("All done! Let's play!", turnStart);
 }
 
 gameSetup1();
-

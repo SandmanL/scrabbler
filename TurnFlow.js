@@ -46,12 +46,9 @@ function turnStart() {
 	displayScores();
 	wordsFound = [];
 	determineCurrentPlayer();
-
 	draw();
-
+	numTilesLeft();
 	openMsgBox(currentPlayer.name + ", it's your turn!",renderRack);
-
-	//renderRack();
 }
 
 //passing turn
@@ -75,8 +72,10 @@ function endTurn() {
 			}
 		}
 	}
-
 	renderLetters(oldBoard);
+
+	//refill players rack
+	draw();
 
 	if(!checkEndGame()) {
 		//next players turn

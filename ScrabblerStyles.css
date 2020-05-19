@@ -55,12 +55,21 @@ button {
     position: absolute;
     left: 866px;
     top: 0px;
-    height: 616px;
+    height: 612px;
     width:  400px;
     text-align: center;
+    margin: 1px;
+    border: 2px solid #c3c3c3;
+    border-radius: 10px;
 }
 .buttons {
     padding: 20px;
+}
+.tileBag {
+    text-align: center;
+    font-family: "Lucida Sans Unicode";
+    font-size: 18px;
+    padding: 60px 40px;
 }
 #letterBoard {
 	position: relative;

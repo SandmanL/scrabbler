@@ -62,7 +62,6 @@ function swap() {
 
 	//end current turn
 	openMsgBox("All your tiles have been collected and you will be given a new set of tiles on your next turn!",endTurn);
-
 }
 
 function shuffle() {
@@ -119,11 +118,10 @@ document.onclick = function (event) {
 	}
 }
 
-
 //places tiles from currentPlayer.rack to board
 letterBoard.onclick = function (event) {
 	const x = event.pageX - 9;
-	const y = event.pageY - 54;
+	const y = event.pageY - 68;
 	let xCoor = Math.floor(x/HorizSpacing);
 	let yCoor = Math.floor(y/VertSpacing);
 	//console.log(xCoor,yCoor,newBoard[yCoor][xCoor]);
@@ -143,7 +141,6 @@ letterBoard.onclick = function (event) {
 		renderRack();
 	}
 }
-
 
 //returns tiles placed on board this turn back to currentPlayer.rack
 function reclaimTiles() {
@@ -167,4 +164,8 @@ function reclaimTiles() {
 	renderLetters(oldBoard);
 	//re render currentPlayer.rack
 	renderRack();
+}
+
+function numTilesLeft() {
+	document.getElementById("bag").innerHTML = "Tiles left in bag: " + bagTiles.length;
 }
