@@ -23,7 +23,7 @@ let bagTiles = ['E','E','E','E','E','E','E','E','E','E','E','E',
 				'V','W','Y','V','W','Y','K','J','X','Q','Z'];
 
 let rack = [];
-const handSize = 8;
+const handSize = 7;
 
 //draw more tiles as the last action in turn;
 function draw() {
