@@ -12,15 +12,17 @@ players currentPlayer.rack of letters
 		place letters on board
 		get placed letters back from board
 */
-let bagTiles = ['E','E','E','E','E','E','E','E','E','E','E','E',
-				'A','A','A','A','A','A','A','A','A',
-				'I','I','I','I','I','I','I','I','I',
-				'O','O','O','O','O','O','O','O','G','G','G',
-				'N','N','N','N','N','N','R','R','R','R','R','R',
-				'T','T','T','T','T','T','D','D','D','D',
-				'L','S','U','L','S','U','L','S','U','L','S','U',
-				'B','C','M','P','F','H','B','C','M','P','F','H',
-				'V','W','Y','V','W','Y','K','J','X','Q','Z'];
+let bagTiles = [
+	'E','E','E','E','E','E','E','E','E','E','E','E',
+	'A','A','A','A','A','A','A','A','A',
+	'I','I','I','I','I','I','I','I','I',
+	'O','O','O','O','O','O','O','O','G','G','G',
+	'N','N','N','N','N','N','R','R','R','R','R','R',
+	'T','T','T','T','T','T','D','D','D','D',
+	'L','S','U','L','S','U','L','S','U','L','S','U',
+	'B','C','M','P','F','H','B','C','M','P','F','H',
+	'V','W','Y','V','W','Y','K','J','X','Q','Z'
+];
 
 const handSize = 7;
 
