@@ -1,67 +1,49 @@
 <!DOCTYPE html>
 <html>
-<style>
-.tile {
-    display: inline-block;
-    width: 38px;
-    height: 38px;
-    font-size: 24px;
-    font-family: Helvetica;
-    border-radius: 5px;
-    border: 1px solid black;
-    background-color: rgba(255,255,200,0.75);
-    text-align: center;
-    line-height: 38px;
-    cursor: pointer;
-    position: relative;
-    margin-right: 1px;
-}
-.tile.selected {
-    border-color: red;
-	bottom: 10px;
-}
-.tileScore {
-    position: absolute;
-    right: 2px;
-    bottom: -2px;
-    font-size: 10px;
-    line-height: 16px;
-}
-.rack {
-	position: absolute;
-	left: 900px;
-	top: 40px;
-	z-index: 5;
-}
-
-</style>
+<head>
+<link rel="stylesheet" type="text/css" href="theme/ScrabblerStyles.css">
+</head>
 <body>
-<p>
-<button onclick="randomized()">Random</button>
-<button onclick="classic()">Classic</button>
-<button onclick="renderLetters(oldBoard)">Old Board</button>
-<button onclick="renderLetters(newBoard)">New Board</button>
-<button onclick="scoreTurn()">Show Score</button>
-<button onclick="displayTurn()">Show new words</button>
-<button onclick="draw(7)">draw tiles</button>
-<button onclick="shuffle()">shuffle rack</button>
-<button onclick="swap()">swap your tiles</button>
-<button onclick="reclaimTiles()">reclaim tiles</button>
-
+<p style="text-align: center; width: 610px;">
+<button onclick="randomized()">Random Board</button>
+<button onclick="classic()">Classic Board</button>
 </p>
-<div style="position: relative;">
+<div id="playArea" style="position: relative;">
  <canvas id="boardCanvas" width="66" height="66"
-   style="border:1px solid #c3c3c3; position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
- <canvas id="letterCanvas" width="66" height="66"
-   style="border:0px; position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
- <span id="bag"></span>
- <span id="rack" class ="rack"></span>
+   style="border:1px solid #c3c3c3; position: absolute; left: 0; top: 0;"></canvas>
+ <div id="letterBoard"></div>
+ <span id="playerArea" class="playerArea">
+     <div id="submitButton" class="buttons">
+        <button onclick="submitPlay()">Submit Play</button>
+     </div>
+     <div id="rackDiv" class="rackDiv">
+        <span id="rack" class ="rack"></span>
+     </div>
+     <div id="playButtonsTop" class="buttons">
+        <button onclick="shuffle()">Shuffle Letters</button>
+        <button onclick="reclaimTiles()">Reclaim Letters</button>
 
+     </div>
+     <div id="playButtonsBelow" class="buttons">
+        <button onclick="swap()">Exchange Letters</button>
+        <button onclick="passTurn()">Pass Turn</button>
+     </div>
+     <div id="bag" class="tileBag">Tiles left in bag:</div>
+ </span>
+ <div id="messageBox" class="msgBox">
+     <div id="message" class ="msgBoxContent">This is a message designed to notify or ask you for something</div>
+     <div id="button" class = "msgBoxContent" style="text-align: center;">
+        <button id="messageButton" class="msgBoxButton" onclick="closeMsgBox()">OK</button>
+     </div>
+ </div>
+ <div id="shade" class="shade"></div>
 </div>
-
-<script src="BoardGenerator.js"></script>
-<script src="BoardScoring.js"></script>
-<script src="TileBag.js"></script>
+<script src="src/Dictionary.js"></script>
+<script src="src/Notifications.js"></script>
+<script src="src/TurnFlow.js"></script>
+<script src="src/BoardGenerator.js"></script>
+<script src="src/BoardScoring.js"></script>
+<script src="src/TileBag.js"></script>
+<script src="src/PlayerCreation.js"></script>
 </body>
 </html>
-

@@ -1,6 +1,6 @@
 
-var boardCanvas = document.getElementById("boardCanvas");
-var board = boardCanvas.getContext("2d");
+const boardCanvas = document.getElementById("boardCanvas");
+const board = boardCanvas.getContext("2d");
 const tileW = 40;
 const tileH = tileW;
 const boardH = tileH*15+16;
@@ -8,18 +8,19 @@ const boardW = boardH;
 const legendW = 250;
 boardCanvas.height = boardH;
 boardCanvas.width = boardW + legendW;
-board.font="20px Georgia";
+board.font = "20px Lucida Sans Unicode";
 board.linewidth = "1";
 board.strokeStyle = "grey";
 board.fillStyle = "#FF0000";
 const HorizSpacing = tileW+1;
-const VertSpacing =tileH+1;
+const VertSpacing = tileH+1;
 
 //2d array of 0's to store which tiles have been colored
 let colored = [];
 
 //load a classic board
 classic();
+legend();
 
 function resetColored() {
 	for (let i =0; i<15;i++){
@@ -33,7 +34,7 @@ function resetColored() {
 function legend() {
 	const gap = 30;
 	let txt = "Error";
-	board.font="20px Georgia";
+	board.font="20px Lucida Sans Unicode";
 
 	function description(tier){
 
@@ -54,28 +55,45 @@ function legend() {
 			default: txt = "Error";
 		}
 		board.fillText(txt, boardW + gap*1.5 + tileW, gap*(tier+1) + (tier-1)*(tileH+2));
-
 	}
-
 	for (let i=0;i<4;i++) description(i+1);
+}
 
+function displayScores() {
+
+	board.clearRect(boardW,boardH/2,boardW+legendW, boardH);
+	const gap = 30;
+	let txt = "Error";
+	board.font="20px Lucida Sans Unicode";
+	board.fillStyle = "#000000";
+	board.textBaseline = "middle";
+	const midline = boardH - gap - 130;
+
+	board.beginPath();
+	board.moveTo(boardW + legendW - gap, boardH - gap);
+	board.lineTo(boardW + legendW - gap, boardH - gap - 260);
+	board.lineTo(boardW + gap, boardH - gap - 260);
+	board.lineTo(boardW + gap, boardH - gap);
+	board.closePath();
+	board.stroke();
+
+	let y = midline - (numPlayers*2-1)/2*gap;
+	for (let i = 0; i<numPlayers;i++) {
+		txt = players[i].name + ": ";
+		board.fillText(txt, boardW + gap*2, y);
+		txt = players[i].score + " points";
+		board.fillText(txt, boardW + gap*4, y + gap);
+		y += gap*2;
+	}
 }
 
 function grid() {
-	//board.beginPath();
 	board.fillStyle = "grey";
 	for (let i=0;i<16;i++){
-		//Vertical grid lines
-		//board.moveTo(i*HorizSpacing, 0);
-		//board.lineTo(i*HorizSpacing, boardH);
 		board.fillRect(i*HorizSpacing,0,1,boardH);
-		//Horizontal grid lines
-		//board.moveTo(0, i*VertSpacing);
-		//board.lineTo(boardW, i*VertSpacing);
 		board.fillRect(0,i*VertSpacing,boardW,1);
-		
+
 	}
-	//board.stroke();
 }
 function colorPicker(input) {
 	switch (input) {
@@ -103,6 +121,7 @@ function randomized() {
 	}
 	mirr();
 }
+
 function mirr(){
 	board.clearRect(HorizSpacing*8,0,boardW-(HorizSpacing*8), boardH);
 	board.clearRect(0,VertSpacing*8,boardW,boardH-(VertSpacing*8));
@@ -140,7 +159,6 @@ function mirr(){
 		}
 	}
 	grid();
-	legend();
 }
 
 function classic() {

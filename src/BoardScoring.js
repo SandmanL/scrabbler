@@ -53,25 +53,47 @@ let newBoard = [[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '],
 				[' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']];
 
 let letterValues = [1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10];
-
+let turnScore;
 let wordsFound = [];
 let turnCoordinates = [];
-var letterCanvas = document.getElementById("letterCanvas");
-letterCanvas.width = boardW;
-letterCanvas.height = boardH;
-var letterBoard = letterCanvas.getContext("2d");
-letterBoard.font="30px Helvetica";
-letterBoard.fillStyle = "#000000";
+
+const letterBoard = document.getElementById("letterBoard");
+letterBoard.style.width = `${boardW}px`;
+letterBoard.style.height = `${boardH}px`;
 
 function renderLetters(array){
 	//clear letters
-	letterBoard.clearRect(0,0,boardW,boardH);
+	let newHTML = "";
+	//let tile = null;
+	let x;
+	let y;
+	//let pos = "";
 	//draw new letter array
 	for (let i=0; i<15;i++){
 		for (let j=0; j<15;j++) {
-			letterBoard.fillText(array[i][j],j*HorizSpacing+10,(i+1)*VertSpacing-10);
+			if (array[i][j] != ' ') {
+				//attempt with makeTile function directly
+				x = j*HorizSpacing+2;
+				y = i*VertSpacing+2;
+				//pos = `style = "top: ${y}px; left: ${x}px; position: absolute;"`;
+				newHTML += makeBoardTile(array[i][j],x,y);
+
+				//Attempt with style setting
+				//tile.style.left = `${x}px`;
+				//tile.style.top = `${y}px`;
+				//document.getElementById('playArea').append(tile);
+
+				//Original code
+				//letterBoard.fillText(array[i][j],j*HorizSpacing+10,(i+1)*VertSpacing-10);
+			}
 		}
 	}
+	letterBoard.innerHTML = newHTML;
+
+	//Chris Code
+	//selectedTile.style.left = `${x-x%HorizSpacing+2}px`;
+	//selectedTile.style.top = `${y-y%VertSpacing+2}px`;
+	//document.body.append(selectedTile);
 }
 
 // finds coordinates of tiles played this turn and stores them to turnCoordinates
@@ -86,6 +108,7 @@ function tilesPlayed() {
 			}
 		}
 	}
+	return turnCoordinates.length;
 }
 
 function scoreTurn(){
@@ -102,16 +125,16 @@ to find score
 
 
 */
-	wordsFound =[];
+	wordsFound = [];
+	turnScore = 0;
 	let scoringWords = [];
 	let wordMultis = [];
-	let turnScore = 0;
 
 	// find coordinates of new letters played
-	tilesPlayed();
-	
+	let tilesUsed = tilesPlayed();
+
 	//only one new tile placed
-	if (turnCoordinates.length==1){
+	if (tilesUsed==1){
 		let xCoor = turnCoordinates[0][0];
 		let yCoor = turnCoordinates[0][1];
 
@@ -130,7 +153,7 @@ to find score
 		wordMultis.push(getVertMulti(xCoor,top,bot));
 
 	//more than one new tile placed
-	}else if(turnCoordinates.length>1){
+	}else if(tilesUsed>1){
 		//check if new word is vertical
 		if(turnCoordinates[0][0]==turnCoordinates[1][0]){
 			//find longest vertical word
@@ -143,7 +166,7 @@ to find score
 			wordMultis.push(getVertMulti(xCoor,top,bot));
 
 			//for each new tile, look for new words horizontally
-			for (let i = 0; i<turnCoordinates.length;i++){
+			for (let i = 0; i<tilesUsed;i++){
 				xCoor = turnCoordinates[i][0];
 				yCoor = turnCoordinates[i][1];
 				let left = findLeft(xCoor,yCoor);
@@ -165,7 +188,7 @@ to find score
 			wordMultis.push(getHorizMulti(left,right,yCoor));
 
 			//for each new tile, look for new words vertically
-			for (let i = 0; i<turnCoordinates.length;i++){
+			for (let i = 0; i<tilesUsed;i++){
 				xCoor = turnCoordinates[i][0];
 				yCoor = turnCoordinates[i][1];
 				let top = findTop(xCoor,yCoor);
@@ -272,9 +295,6 @@ to find score
 		}
 		return multi;
 	}
-	console.log(scoringWords);
-	console.log(wordMultis);
-
 
 	//scoring new words
 	let wordScore;
@@ -285,7 +305,10 @@ to find score
 		}
 		turnScore = turnScore + wordScore*wordMultis[i];
 	}
-	console.log("Score for this turn is " + turnScore);
+	//bonus for using 7 tiles
+	if(tilesUsed == 7)
+		turnScore += 25;
+	return turnScore;
 }
 
 //gets value of a letter
@@ -293,7 +316,7 @@ function letterScore(letter) {
 	return letterValues[letter.charCodeAt(0)-65];
 }
 
-//Shows words played during current turn
+//Shows words played and score of current move
 function displayTurn(){
-	console.log(wordsFound);
+	openMsgBox(scoreTurn() + " " + wordsFound);
 }
